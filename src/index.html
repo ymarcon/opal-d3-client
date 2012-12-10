@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Opal Graphs</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/d3.v2.min.js"></script>
+    <script type="text/javascript" src="js/crossfilter.v1.min.js"></script>
+    <script type="text/javascript" src="js/opal-core.js"></script>
+    <script type="text/javascript" src="js/opal-graphs-core.js"></script>
+    <script type="text/javascript" src="js/opal-graphs.js"></script>
+    <script type="text/javascript" src="js/opal-parallel.js"></script>
+    <script type="text/javascript" src="js/opal-list.js"></script>
+    <script type="text/javascript" src="js/opal-crossfilter.js"></script>
+    <script type="text/javascript" src="js/opal-scatter.js"></script>
+    <script type="text/javascript" src="js/opal-application.js"></script>
+    <script type="text/javascript" src="js/bootstrap-modal.js"></script>
+    <script type="text/javascript" src="js/bootstrap-tab.js"></script>
+    <script type="text/javascript" src="js/bootstrap-alert.js"></script>
+    <script type="text/javascript" src="js/bootstrap-dropdown.js"></script>
+    <script type="text/javascript" src="js/bootstrap-typeahead.js"></script>
+  </head>
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#" onclick="opal.application.home()">Opal Graphs</a>
+          <div class="nav-collapse">
+            <ul class="nav" id="nav">
+              <li><a href="#" onclick="opal.application.home()">Home</a></li>
+            </ul>
+            <ul class="nav pull-right">
+              <li><a href=".." target="_blank">Opal</a></li>
+              <li class="divider-vertical"></li>
+              <li><a data-toggle="modal" href="#loginModal" id="signin">Sign in</a></li>
+              <li><a href="#" onclick="opal.application.signout()" id="signout">Sign out</a></li>
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div>
+      </div><!-- /navbar-inner -->
+    </div>
+
+    <div id="alert-place" style="position:absolute;top:60px;right:20px;"></div>
+
+    <div class="container" style="margin-top:40px">
+      <div id="home">
+        <div id="home-header" class="page-header">
+          <h2>Opal Graphs <small>Visualize Opal data</small></h2>
+        </div>
+        <div id="home-body">
+          <p></p>
+          <dl></dl>
+        </div>
+        <div id="home-footer"></div>      
+      </div>
+      
+    </div>
+
+    <div id="graph" class="container-fluid" style="display:none;">
+      <div id="graph-header" class="row-fluid page-header" style="padding-bottom: 0;">
+        <div class="span3">
+          <h2></h2>
+          <p></p>
+        </div>
+        <div class="btn-toolbar">
+          <div class="btn-group">
+            <a data-toggle="modal" href="#configModal" class="btn btn-small"><i class="icon-list-alt"></i> Configure</a>
+            <a class="btn btn-small" href="#" onclick="opal.application.submitConfigurationForm();"><i class="icon-refresh"></i> Refresh</a>
+          </div>
+        </div>
+      </div>
+      <div id="graph-body" class="row-fluid"></div>
+      <div id="graph-footer" class="row-fluid"></div>
+    </div>
+
+
+<!-- Login Modal -->
+    <div id="loginModal" class="modal hide fade in" style="width:300px;left:60%;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Sign in Opal</h3>
+      </div>
+      <div class="modal-body" id="login-form">
+        <label>Username</label>
+        <input name="username" type="text" class="span3" value="">
+        <label>Password</label>
+        <input name="password" type="password" class="span3" value="">
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-primary" data-dismiss="modal" onclick="opal.application.signin();">Sign in</a>
+        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+      </div>
+    </div>
+<!-- End Login Modal -->
+
+<!-- Config Modal -->
+    <div id="configModal" class="modal hide fade in" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Configuration</h3>
+      </div>
+      <div class="modal-body">
+        <div class="tabbable">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#data-form" data-toggle="tab">Data</a></li>
+            <li><a href="#options-form" data-toggle="tab">Options</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="data-form">
+              <p>Where to get the data to be passed to the graph.</p>
+              <label>Datasource*</label>
+              <input name="datasource" type="text" class="span3" value="opal-data" data-provide="typeahead" data-source="">
+              <label>Table*</label>
+              <input name="table" type="text" class="span3" value="BloodPressure" data-provide="typeahead" data-source="">
+              <label>Variables</label>
+              <input name="select" type="text" class="span3" value="BP$">
+              <span class="help-block">Regular expression to select variables.</span>      
+            </div>
+            <div class="tab-pane" id="options-form">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-primary" data-dismiss="modal" onclick="opal.application.submitConfigurationForm();">Apply</a>
+        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+      </div>
+    </div>
+<!-- End Config Modal -->
+
+  <script>opal.application.init();</script>
+
+  </body>
+</html>
